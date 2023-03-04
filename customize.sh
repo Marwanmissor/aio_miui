@@ -109,7 +109,6 @@ check_miui() {
 
 install_files() {
 	ui_print "-- Do you want to install all mods?"
-	ui_print "-- Warning: Miui 14 CN is not supported for modded luncher"
 	ui_print "  Vol+ = Yes"
 	ui_print "  Vol- = No, I want to choose"
 	ui_print " "
@@ -125,7 +124,7 @@ install_files() {
 	    done
 
 		cp -rf $MODPATH/apps/FileExplorer $MODPATH/system/app
-		#cp -rf $MODPATH/apps/MiuiGallery $MODPATH/system/priv-app
+		cp -rf $MODPATH/apps/MiuiGallery $MODPATH/system/priv-app
 		cp -rf $MODPATH/apps/MiuiSystemUIPlugin $MODPATH/system/app
 		cp -rf $MODPATH/apps/MIUIMusic $MODPATH/system/app
 		cp -rf $MODPATH/apps/PersonalAssistant $MODPATH/system/priv-app
@@ -147,10 +146,12 @@ ui_print " "
 if chooseport; then
     ui_print "- Miui 13 or lower selected"
     cp -rf $MODPATH/files/launcher/MiuiHome.apk $MODPATH/system/priv-app/aMiuiHome
+    install_file
 else
 {
     ui_print "- Miui 14 Eu selected"
     cp -rf $MODPATH/files/launcher/MiuiHome.apk $MODPATH/system/product/priv-app/aMiuiHome
+   install_file
 }
 
 fi
@@ -163,6 +164,7 @@ fi
 if chooseport; then
     ui_print "- Deleting POCO Launcher and adding MiuiHome support."
     cp -rf $MODPATH/files/poco/Framework_resoverlay.apk $MODPATH/system/product/overlay
+     install_file
 else
 {
     ui_print "- Skipping..."
@@ -190,18 +192,18 @@ install_file() {
 }
 
 choose_mod() {
-	#ui_print " "
-	#ui_print "-- Do you want to install gallery?"
-	#ui_print "  Vol+ = Yes"
-	#ui_print "  Vol- = No"
-	#ui_print " "
-	#chooseport
-	#if chooseport; then
-		#PACKAGE="com.miui.gallery"
-		#ui_print "- installing gallery"
-		#cp -rf $MODPATH/apps/MiuiGallery $MODPATH/system/priv-app
-		#install_file
-	#fi
+	ui_print " "
+	ui_print "-- Do you want to install gallery?"
+	ui_print "  Vol+ = Yes"
+	ui_print "  Vol- = No"
+	ui_print " "
+	chooseport
+	if chooseport; then
+		PACKAGE="com.miui.gallery"
+		ui_print "- installing gallery"
+		cp -rf $MODPATH/apps/MiuiGallery $MODPATH/system/priv-app
+		install_file
+    fi
 
 # repeat this for all apps to be 
 	ui_print " "
