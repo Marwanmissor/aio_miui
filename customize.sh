@@ -1,3 +1,4 @@
+LATESTARTSERVICE=true
 SKIPUNZIP=0
 SKIPMOUNT=false
 Manufacturer=$(getprop ro.product.vendor.manufacturer)
@@ -21,6 +22,29 @@ com.miui.securitycenter
 com.android.thememanager
 "
 # Set what you want to display when installing your module
+
+fix_notification(){
+GP () { grep_prop $1 $TMPDIR/module.prop; }
+
+ui_print "- Add app to notification fix list"
+ui_print
+
+Lkkdf="$(GP ListApp | tr ',' '\n')"
+[ "$Lkkdf" ] || Lkkdf="$(pm list packages -3 | cut -d : -f2)"
+
+for Ksksn in $Lkkdf; do
+dumpsys deviceidle whitelist +$Ksksn >&2
+appops start $Ksksn 10008
+appops set $Ksksn 10008 allow
+appops set $Ksksn 10021 allow
+appops set $Ksksn RUN_IN_BACKGROUND allow
+appops set $Ksksn RUN_ANY_IN_BACKGROUND allow
+appops set $Ksksn START_FOREGROUND allow
+ui_print "  $Ksksn"
+sleep 0.3
+done
+
+}
 
 print_modname() {
   ui_print "*******************************"
