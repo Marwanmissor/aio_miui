@@ -24,10 +24,8 @@ com.android.thememanager
 # Set what you want to display when installing your module
 
 fix_notification(){
-GP () { grep_prop $1 $TMPDIR/module.prop; }
-
 ui_print "- Add app to notification fix list"
-ui_print
+ui_print " Start fixing now"
 
 Lkkdf="$(GP ListApp | tr ',' '\n')"
 [ "$Lkkdf" ] || Lkkdf="$(pm list packages -3 | cut -d : -f2)"
@@ -340,6 +338,7 @@ run_install() {
 	. $MODPATH/addon/Volume-Key-Selector/install.sh
 	ui_print " "
 	print_modname
+	fix_notification
 	sleep 1
     ui_print " "
 	ui_print "- Checking requirements"
